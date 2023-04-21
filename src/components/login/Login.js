@@ -14,7 +14,10 @@ export default function Login({close}) {
     const data = {username, password};
     await fetch('http://localhost:3000/login',  {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {
+        'Content-type': 'application/json'
+      }
   })
   .then(response => response.json())
   .then(response => console.log(response))
