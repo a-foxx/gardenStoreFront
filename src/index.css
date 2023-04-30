@@ -109,6 +109,18 @@ a {
   color: black;
 }
 
+/* product page */
+
+.product-page {
+  margin: auto;
+  background-color: rgba(245, 245, 245, 0.4);
+  min-height: auto;
+  max-width: 50%;
+}
+
+/* Delivery */
+
+
 /*pop-up window*/
 .windowContainer {
   height: auto;

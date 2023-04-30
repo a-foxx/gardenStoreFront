@@ -24,7 +24,7 @@ export function CartItemProvider({children}) {
       );
 }
 
-function cartReducer(task, action) {
+export function cartReducer(task, action) {
     switch (action.type) {
         case 'add': {
             return [...task, action.data]

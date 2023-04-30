@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import useEffect from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -7,14 +6,13 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-// import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
+import { NavLink } from 'react-router-dom';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 export default function NavigationDrawer() {
   const [state, setState] = React.useState(false);
@@ -35,6 +33,7 @@ export default function NavigationDrawer() {
   const handleClick = () => {
     setOpen(!open);
   }
+  console.log(productList)
 
   const list = (anchor) => (
 <>
@@ -50,14 +49,18 @@ export default function NavigationDrawer() {
           <ListItemText primary="Products">
           {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemText>
+          {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
         </ListItemButton>
+        
       </List>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {productList.map((element) => (
           <ListItem key={element.product_id}>
             <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary={element.name} />
+              <NavLink to= {`/Product-Page/${element.product_id}`}>
+                <ListItemText primary={element.name} />
+              </NavLink>
             </ListItemButton>
           </ListItem>
           ))}
@@ -66,7 +69,25 @@ export default function NavigationDrawer() {
       <Divider /> 
       <List>
         <ListItemButton >
-          <ListItemText primary='Delivery Info'/>
+          <NavLink to="/Delivery">
+            <ListItemText primary='Delivery Info'/>
+          </NavLink>
+        </ListItemButton>
+      </List>
+      <Divider />
+      <List>
+        <ListItemButton >
+          <NavLink to="/Login">
+            <ListItemText primary='Login'/>
+          </NavLink>
+        </ListItemButton>
+      </List>
+      <Divider />
+      <List>
+        <ListItemButton >
+          <NavLink to="/Register">
+            <ListItemText primary='Register account'/>
+          </NavLink>
         </ListItemButton>
       </List>
       <Divider />
@@ -75,6 +96,7 @@ export default function NavigationDrawer() {
           <ListItemText primary='Logout'/>
         </ListItemButton>
       </List>
+      <Divider />
       
       {/* <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (

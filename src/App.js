@@ -1,31 +1,30 @@
 import './App.css';
-// import { useState } from 'react';
-import NavBar from './components/navigation/NavBar';
-import Products from './components/products/Products.js';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home  from './components/Home';
+import Login from './components/login/Login';
+import Registration from './components/login/Registration';
 import { CartItemProvider } from './components/context/context';
-// import NavigationDrawer from './components/navigation/Drawer.js'
-// import Login from './components/login/Login.js'
-// import Cart from './components/cart/Cart.js'
-// import Registration from "./components/login/Registration.js"
+import  ProductPage  from './components/products/ProductPage';
+import Cart from './components/cart/Cart'
+import Delivery from './components/pages/delivery';
 
 function App() {
 
   return (
     <CartItemProvider>
-    <div className="container">
-      <header>
-        <img src="images/ash_tree.jpeg" alt=''/>
-        <h1>Garden Store</h1>
-        <img src="images/oak_tree.webp" alt=''/>
-      </header>
-      <nav>
-        <NavBar/>
-      </nav>
-      <Products />
+      <Routes>
+        <Route exact path='/Home' element={<Home />} />
+        <Route exact path='/Cart' element={<Cart />} />
+        <Route exact path='/Product' element={<ProductPage />} />
+        <Route exact path='/Login' element={<Login />} />
+        <Route exact path='/Register' element={<Registration />} />
+        <Route exact path='/Delivery' element={<Delivery />} />
+        <Route exact path='/Product-Page/:productId' element={<ProductPage />} />
+      </Routes>
+    </CartItemProvider>
 
-     </div>
-     </CartItemProvider>
-  );
+  )
 
 
 }
