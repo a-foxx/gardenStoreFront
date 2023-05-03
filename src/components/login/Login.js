@@ -11,10 +11,10 @@ import { useNavigate, NavLink } from 'react-router-dom';
 
 export default function Login() {
   const [open, setOpen] = useState(true);
-  const history = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
+  const history = useNavigate();
+  
 
   const submitLogin = async () => {
     const data = {email: username, password};
@@ -40,7 +40,7 @@ export default function Login() {
 
   return (
     <div >
-      <Dialog open={open} >
+      <Dialog open={open} onClose={handleClose} >
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <DialogContentText>
