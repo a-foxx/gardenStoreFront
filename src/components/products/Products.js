@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {useCartContext, useCartDispatch} from '../context/context'
-// import Cart from '../cart/Cart'
+import { Route, NavLink } from 'react-router-dom'
 import ProductPage from './ProductPage.js'
 
 export default function Products() {
+
     const cartItems = useCartContext
     const cartDispatch = useCartDispatch()
     const [products, setProducts] = useState([]);
@@ -23,15 +24,12 @@ export default function Products() {
         cartDispatch({type: 'add', data: el})
       }
 
-    // const openPage = (el) => {
-    //     console.log('working pp');
-    //     setShowPage(true);
-    //     <ProductPage />
-    // }
 
     const listProducts = products.map((product) => (
-        <div key={product.id} className="products">
-            <img className="product-images" src={product.img_url} alt='' onClick={() => setShowPage(!showPage)}/>
+        <div key={product.product_id} className="products">
+            <NavLink to={`/Product-Page/${product.product_id}`}>
+            <img className="product-images" src={product.img_url} alt='' />
+            </NavLink>
             <h2>{product.name}</h2>
             <p className="price">£{product.price}</p>
 
@@ -44,7 +42,6 @@ export default function Products() {
             <div className='product-container'>
                 {listProducts}
             </div>
-            {showPage && <ProductPage close={() => setShowPage(false)}/>}
         </>
     )
 }

@@ -14,6 +14,7 @@ export default function Login() {
   const history = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+ 
 
   const submitLogin = async () => {
     const data = {email: username, password};
@@ -34,11 +35,12 @@ export default function Login() {
 
   const handleClose = () => {
     setOpen(false);
+    history(-1)
   };
 
   return (
-    <div>
-      <Dialog open={open} onClose={handleClose}>
+    <div >
+      <Dialog open={open} >
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <DialogContentText>

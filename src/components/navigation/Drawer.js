@@ -16,7 +16,8 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 export default function NavigationDrawer() {
   const [state, setState] = React.useState(false);
-  const [open, setOpen] = React.useState(true) //
+  const [openProducts, setOpenProducts] = React.useState(false)
+  const [openAccount, setOpenAccount] = React.useState(false)
   const [productList, setProductList] = React.useState([])
 
   React.useEffect(() => {
@@ -30,10 +31,15 @@ export default function NavigationDrawer() {
     setState(open);
   };
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClickProducts = () => {
+    setOpenProducts(!openProducts);
   }
-  console.log(productList)
+
+  const handleClickAccount = () => {
+    setOpenAccount(!openAccount);
+  }
+
+  // console.log(productList)
 
   const list = (anchor) => (
 <>
@@ -45,15 +51,15 @@ export default function NavigationDrawer() {
       // onKeyDown={toggleDrawer(anchor)}
     >
       <List>
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClickProducts}>
           <ListItemText primary="Products">
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {{openProducts} ? <ExpandLess /> : <ExpandMore />}
           </ListItemText>
-          {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+          {openProducts ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
         </ListItemButton>
         
       </List>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={openProducts} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {productList.map((element) => (
           <ListItem key={element.product_id}>
@@ -64,6 +70,31 @@ export default function NavigationDrawer() {
             </ListItemButton>
           </ListItem>
           ))}
+        </List>
+      </Collapse>
+      <Divider /> 
+      <List>
+        <ListItemButton onClick={handleClickAccount}>
+          <ListItemText primary="Account">
+          {openAccount ? <ExpandLess /> : <ExpandMore />}
+          </ListItemText>
+          {openAccount ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+        </ListItemButton>
+      </List>
+      <Collapse in={openAccount} timeout="auto" unmountOnExit>
+        <List>
+          <ListItemButton sx={{ pl: 4 }}>
+            <NavLink to="/Account-info">
+              <ListItemText primary='Account details'/>
+            </NavLink>
+          </ListItemButton>
+        </List>
+        <List>
+          <ListItemButton sx={{ pl: 4 }}>
+            <NavLink to="/Order-history">
+              <ListItemText primary='Order history'/>
+            </NavLink>
+          </ListItemButton>
         </List>
       </Collapse>
       <Divider /> 
