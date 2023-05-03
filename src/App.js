@@ -8,6 +8,7 @@ import { CartItemProvider } from './components/context/context';
 import  ProductPage  from './components/products/ProductPage';
 import Cart from './components/cart/Cart'
 import Delivery from './components/pages/delivery';
+import FormDialog from './components/login/sample';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path='/Register' element={<Registration />} />
         <Route exact path='/Delivery' element={<Delivery />} />
         <Route exact path='/Product-Page/:productId' element={<ProductPage />} />
+        <Route exact path='/sample' element={<FormDialog />} />
       </Routes>
     </CartItemProvider>
 

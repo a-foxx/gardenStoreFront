@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 
 export default function Login() {
@@ -14,6 +14,17 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:3000/checkedLoggedIn')
+    .then(response => response.json())
+    .then(response => {
+      if (response.message) {
+        return history('/Home');
+      }
+    })
+    .catch(err => console.log(err))
+  }, [])
   
 
   const submitLogin = async () => {
@@ -30,7 +41,7 @@ export default function Login() {
     console.log(response);
     history('/Home')
   })
-  .catch(error => console.error(error))
+  .catch(error => console.error('cats', error))
   }
 
   const handleClose = () => {
@@ -70,7 +81,7 @@ export default function Login() {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <NavLink to="/Register"><Button>Register account</Button></NavLink>
-          <Button onClick={submitLogin}>Subscribe</Button>
+          <Button onClick={submitLogin}>Login</Button>
         </DialogActions>
       </Dialog>
     </div>

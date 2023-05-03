@@ -13,12 +13,14 @@ import Collapse from '@mui/material/Collapse';
 import { NavLink } from 'react-router-dom';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavigationDrawer() {
   const [state, setState] = React.useState(false);
   const [openProducts, setOpenProducts] = React.useState(false)
   const [openAccount, setOpenAccount] = React.useState(false)
   const [productList, setProductList] = React.useState([])
+  const history = useNavigate();
 
   React.useEffect(() => {
     fetch('http://localhost:3000/products')
@@ -26,6 +28,13 @@ export default function NavigationDrawer() {
     .then(response => setProductList(response))
     .catch(error => console.error(error))
   }, [])
+
+  const logout = () => {
+    fetch('http://localhost:3000/logout')
+    .then(response => response.json())
+    .then(response => history('/Login'))
+    .catch(error => console.error('logout failed', error))
+  }
 
   const toggleDrawer = (open) => (event) => {
     setState(open);
@@ -123,7 +132,7 @@ export default function NavigationDrawer() {
       </List>
       <Divider />
       <List>
-        <ListItemButton>
+        <ListItemButton onClick={logout}>
           <ListItemText primary='Logout'/>
         </ListItemButton>
       </List>
