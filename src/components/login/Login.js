@@ -19,7 +19,7 @@ export default function Login() {
     fetch('http://localhost:3000/checkedLoggedIn')
     .then(response => response.json())
     .then(response => {
-      if (response.message) {
+      if (response.message === 'true') {
         return history('/Home');
       }
     })
