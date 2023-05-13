@@ -30,7 +30,12 @@ export default function NavigationDrawer() {
   }, [])
 
   const logout = () => {
-    fetch('http://localhost:3000/logout')
+    fetch('http://localhost:3000/logout', {
+      method: 'get',
+      headers: {
+          'Content-Length': '0'
+        }
+    })
     .then(response => response.json())
     .then(response => history('/Login'))
     .catch(error => console.error('logout failed', error))
@@ -137,33 +142,6 @@ export default function NavigationDrawer() {
         </ListItemButton>
       </List>
       <Divider />
-      
-      {/* <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-
     </Box>
     </>
   );

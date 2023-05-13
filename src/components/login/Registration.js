@@ -27,7 +27,7 @@ export default function FormDialog() {
       }
     })
       .then(response => response.json())
-      // .then(console.log(response.body))
+      .then(response => console.log(response.body))
       .catch(error => console.error('Request failed!', error))
   }
 
