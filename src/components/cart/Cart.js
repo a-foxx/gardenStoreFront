@@ -7,53 +7,59 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router';
 import { useCartContext } from '../context/context';
-import { useState,} from 'react';
+import { useState } from 'react';
+import CartItem from './CartItem';
+// import { cartPost } from './CartItem';
+// var cookieParser = require('cookie-parser');
+// const express = require('express');
+// const app = express();
+// app.use(cookieParser());
 
-export default function ScrollDialog() {
+export default function Cart() {
   const [open, setOpen] = React.useState(true);
   const [scroll, setScroll] = React.useState('paper');
   const cartItems = useCartContext()
   const [cart, setCart] = useState(cartItems);
-  const [qty, setQty] = useState(1);
+  // const [qty, setQty] = useState(1);
+  // const [parentQty, setParentQty] = useState([]);
   const history = useNavigate();
-  
-  const cartPost = async (req, res) => {
-    /*const data = {
-      created: date.now(), 
-      quantity: cartItems.quantity, 
-      user_id: req.params??, 
-      product_id: cartItems.product_id 
-    };
-    */
-    const data = {}
-    await fetch('http://localhost:3000/addtocart', {
+
+    // post to carts table
+    const data = { created: new Date() }
+    fetch('http://localhost:3000/addtocart', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json"
-      }
+        'Content-type': 'application/json'
+      },
+      credentials: 'include'
     })
     .then(response => response.json())
     .catch(error => console.log(error))
-}
-
-const listCart = cart.map((product) => (
-    <div key={product.id}className='cart-contents'>
-      <img className='cart-img' src={product.img_url} alt=''/>
-      {product.name}
-      <div>£{product.price}</div>
-      <div className='cart-qty'>{qty}</div>
-      <div className='qty-buttons'>
-          <button id="qty-up" onClick={() => setQty(qty + 1)}>+</button>
-          <button id="qty-down" onClick={() => setQty(qty - 1)}>-</button>
-      </div>
-    </div>
-))
-
-
-  const handleClose = () => {
-    setOpen(false);
+  
+  const mergeCartItems = {};
+  cart.map(item => {
+    if (mergeCartItems[item.product_id]) {
+      mergeCartItems[item.product_id] = {
+        ...item, qty: mergeCartItems[item.product_id].qty+1
+      }
+    } else {
+      mergeCartItems[item.product_id] = {...item, qty: 1}
+    }
+  })
+  
+  // console.log('mergecartitems', mergeCartItems);
+  const listCart = Object.values(mergeCartItems).map((product) => (
+    <CartItem 
+    product={product} 
+    key={product.product_id} 
+    />
+    ))
+    
+    console.log('parent-qty', parentQty)
+    
+    const handleClose = () => {
+      setOpen(false);
     history(-1);
   };
 

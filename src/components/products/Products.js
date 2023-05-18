@@ -7,7 +7,8 @@ export default function Products() {
     const cartDispatch = useCartDispatch()
     const [products, setProducts] = useState([]);
     
-    console.log(cartItems())
+    
+    // console.log(cartItems())
     useEffect(() => {
         fetch('http://localhost:3000/products')
         .then(response => response.json())
@@ -17,11 +18,11 @@ export default function Products() {
     }, [])
 
     const addToCart = (el) => {
-        // setCart([...cart, el])
+// post to carts sessionId?
         cartDispatch({type: 'add', data: el})
       }
 
-
+// mapping products from db
     const listProducts = products.map((product) => (
         <div key={product.product_id} className="products">
             <NavLink to={`/Product-Page/${product.product_id}`}>

@@ -31,10 +31,11 @@ export default function NavigationDrawer() {
 
   const logout = () => {
     fetch('http://localhost:3000/logout', {
-      method: 'get',
+      method: 'POST',
       headers: {
           'Content-Length': '0'
-        }
+        },
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(response => history('/Login'))

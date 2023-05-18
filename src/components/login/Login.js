@@ -15,16 +15,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const history = useNavigate();
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/checkedLoggedIn')
-  //   .then(response => response.json())
-  //   .then(response => {
-  //     if (response.message === 'true') {
-  //       return history('/Home');
-  //     }
-  //   })
-  //   .catch(err => console.log(err)) 
-  // }, [])
+  useEffect(() => {
+    fetch('http://localhost:3000/checkedLoggedIn', {credentials: 'include'})
+    .then(response => response.json())
+    .then(response => {
+      // console.log('response.message : ', response.message);
+      if (response.message === true) {
+        // console.log('response.message : ', response.message)
+        return history('/Home');
+      }
+    })
+    .catch(err => console.log(err)) 
+  }, [])
   
 
     const submitLogin = async () => {
@@ -34,7 +36,8 @@ export default function Login() {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json'
-        }
+        },
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(response => {
