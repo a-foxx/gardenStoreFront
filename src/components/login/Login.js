@@ -52,6 +52,10 @@ export default function Login() {
     history(-1)
   };
 
+  const googleAuth = () => {
+    window.open("http://localhost:3000/auth/google", "_self")
+  }
+
   return (
     <div >
       <Dialog open={open} onClose={handleClose} >
@@ -84,6 +88,7 @@ export default function Login() {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <NavLink to="/Register"><Button>Register account</Button></NavLink>
+          <Button onClick={googleAuth}>Google</Button>
           <Button onClick={submitLogin}>Login</Button>
         </DialogActions>
       </Dialog>

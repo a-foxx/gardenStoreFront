@@ -31,7 +31,8 @@ export default function CartItem ({product}) {
         <div className='cart-qty'>{qty}</div>
         <div className='qty-buttons'>
             <button id="qty-up" 
-            onClick={() => setQty(qty + 1)}
+            onClick={() => setQty(qty + 1)} 
+            // onChange={() => changeParentQty(qty)}
             >+</button>
             <button id="qty-down" onClick={() => setQty(qty - 1)}>-</button>
         </div>

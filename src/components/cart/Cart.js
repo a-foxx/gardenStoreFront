@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router';
 import { useCartContext } from '../context/context';
-import { useState } from 'react';
+import { useState} from 'react';
 import CartItem from './CartItem';
 // import { cartPost } from './CartItem';
 // var cookieParser = require('cookie-parser');
@@ -16,6 +16,7 @@ import CartItem from './CartItem';
 // app.use(cookieParser());
 
 export default function Cart() {
+  // const ref = useRef();
   const [open, setOpen] = React.useState(true);
   const [scroll, setScroll] = React.useState('paper');
   const cartItems = useCartContext()
@@ -53,10 +54,11 @@ export default function Cart() {
     <CartItem 
     product={product} 
     key={product.product_id} 
+    // ref={ref}
     />
     ))
     
-    console.log('parent-qty', parentQty)
+    // console.log('parent-qty', parentQty)
     
     const handleClose = () => {
       setOpen(false);
@@ -94,7 +96,9 @@ export default function Cart() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={cartPost}>Make payment</Button>
+          <Button 
+          // onClick={cartPost}
+          >Make payment</Button>
         </DialogActions>
       </Dialog>
     </div>
