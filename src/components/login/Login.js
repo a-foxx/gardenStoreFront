@@ -13,15 +13,14 @@ export default function Login() {
   const [open, setOpen] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [response, setResponse] = useState(null);
   const history = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:3000/checkedLoggedIn', {credentials: 'include'})
     .then(response => response.json())
     .then(response => {
-      // console.log('response.message : ', response.message);
       if (response.message === true) {
-        // console.log('response.message : ', response.message)
         return history('/Home');
       }
     })
@@ -29,31 +28,49 @@ export default function Login() {
   }, [])
   
 
-    const submitLogin = async () => {
-      const data = {email: username, password};
-      await fetch('http://localhost:3000/auth/login',  {
+  const submitLogin = async () => {
+    // Ensure fields aren't sent as null
+    if (!username || !password) {
+      setResponse('All fields must be completed');
+      return;
+    }
+    try {
+      const data = { email: username, password: password };
+      const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        credentials: 'include'
-    })
-    .then(response => response.json())
-    .then(response => {
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+  
+      const responseData = await response.json();
+      if (responseData.message === 'Incorrect password' || 'User not found') {
+        setResponse(responseData.message);
+      } 
+      if (responseData.message === 'Successfully Authenticated') {
+        history('/Home')
+      }
+    } catch (error) {
       console.log(response);
-      history('/Home')
-    })
-    .catch(error => console.error('cats', error))
+      console.error('Login error:', error);
+      setResponse('An error occurred during login. Please try again.');
     }
+  };
 
   const handleClose = () => {
     setOpen(false);
-    history(-1)
+    history('/Home')
   };
 
-  const googleAuth = () => {
+  const googleAuth = async () => {
     window.open("http://localhost:3000/auth/google", "_self")
+
   }
 
   return (
@@ -79,11 +96,17 @@ export default function Login() {
             margin="dense"
             id="password"
             label="Password"
-            type="text"
+            type="password"
             fullWidth
             variant="standard"
             onChange={(e) => setPassword(e.target.value)}
           />
+        {/* displays response from server */}
+        {response && (
+          <div style={{ display: 'block' }}>
+            {response}
+          </div>
+        )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

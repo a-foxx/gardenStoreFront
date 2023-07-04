@@ -14,22 +14,44 @@ export default function FormDialog() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [response, setResponse] = useState(null);
   const history = useNavigate();
 
+  // post request
   const submit = async () => {
-    const data = {firstName, lastName, email, password} 
-    await fetch('http://localhost:3000/register', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json"
+    // ensures fields aren't sent as null
+    if (!firstName || !lastName || !email || !password) {
+      setResponse('All fields must be completed');
+      return;
+    }
+    const data = { firstName, lastName, email, password };
+    try {
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Registration failed');
       }
-    })
-      .then(response => response.json())
-      .then(response => console.log(response.body))
-      .catch(error => console.error('Request failed!', error))
-  }
+      
+      const responseData = await response.json();
+      if (responseData.message === 'Email exists, please login') {
+        // sets response to display to user
+        setResponse(responseData.message);
+      } else {
+        // Directs to login on successful registration
+        history('/Login');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setResponse('An error occurred during registration. Please try again.');
+    }
+  };
 
   const handleClose = () => {
     history('/Home')
@@ -87,6 +109,12 @@ export default function FormDialog() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          {/* displays response from server */}
+        {response && (
+          <div style={{ display: 'block' }}>
+            {response}
+          </div>
+        )}
 
         </DialogContent>
         <DialogActions>

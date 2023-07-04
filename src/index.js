@@ -11,7 +11,6 @@ root.render(
   <BrowserRouter>
       <React.StrictMode>
         <App />
-        {/* <Login exact path="/login"/> */}
       </React.StrictMode>
   </BrowserRouter>
 );

@@ -5,64 +5,82 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useNavigate } from 'react-router';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useCartContext } from '../context/context';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import CartItem from './CartItem';
-// import { cartPost } from './CartItem';
-// var cookieParser = require('cookie-parser');
-// const express = require('express');
-// const app = express();
-// app.use(cookieParser());
 
 export default function Cart() {
-  // const ref = useRef();
   const [open, setOpen] = React.useState(true);
   const [scroll, setScroll] = React.useState('paper');
-  const cartItems = useCartContext()
+  const cartItems = useCartContext();
   const [cart, setCart] = useState(cartItems);
-  // const [qty, setQty] = useState(1);
-  // const [parentQty, setParentQty] = useState([]);
+  const [load, setLoad] = useState(true);
   const history = useNavigate();
+  console.log('state: cart -- ', cart)
 
-    // post to carts table
-    const data = { created: new Date() }
-    fetch('http://localhost:3000/addtocart', {
-      method: 'POST',
+  // checks if logged in
+  useEffect(() => {
+    fetch('http://localhost:3000/checkedLoggedIn', {credentials: 'include'})
+    .then(response => response.json())
+    .then(response => {
+      if (response.message === false) {
+        return history('/Login');
+      }
+    })
+    .catch(err => console.log(err)) 
+  }, [])
+
+  // renders cart
+  useEffect(() => {
+    // if (cart.length) {
+      fetch('http://localhost:3000/getUserCart', {credentials: 'include'})
+      .then(response => response.json())
+      .then(response => {
+        setCart(response);
+        setLoad(false);
+      })
+      .catch(err => console.log(err))
+    // }
+  }, [])
+
+  // changes quantity of product
+  const updateCartItem = async (cart_id, quantity, product_id) => {
+    const data = { cart_id, quantity, product_id }
+     await fetch('http://localhost:3000/updateUserCart', {
+      method: 'PUT',
       body: JSON.stringify(data),
       headers: {
         'Content-type': 'application/json'
       },
-      credentials: 'include'
+      credentials: 'include',
     })
+    
     .then(response => response.json())
-    .catch(error => console.log(error))
-  
-  const mergeCartItems = {};
-  cart.map(item => {
-    if (mergeCartItems[item.product_id]) {
-      mergeCartItems[item.product_id] = {
-        ...item, qty: mergeCartItems[item.product_id].qty+1
-      }
-    } else {
-      mergeCartItems[item.product_id] = {...item, qty: 1}
-    }
-  })
-  
-  // console.log('mergecartitems', mergeCartItems);
-  const listCart = Object.values(mergeCartItems).map((product) => (
+    .catch(err => console.log(err))
+  }
+
+  const changeCartState = (product_id) => {
+    const newCart = cart.filter((product) => product.product_id != product_id)
+    setCart(newCart)
+    console.log(product_id, newCart)
+  }
+
+  const listCart = cart.map((product) => (
     <CartItem 
-    product={product} 
-    key={product.product_id} 
-    // ref={ref}
+    product={product}
+    key={product.product_id}
+    
+    changeCartItem={(cart_id, quantity, product_id) => updateCartItem(cart_id, quantity, product_id)}
+
+    onDeleteProduct={changeCartState}
+  
     />
     ))
     
-    // console.log('parent-qty', parentQty)
-    
     const handleClose = () => {
       setOpen(false);
-    history(-1);
+      history(-1);
   };
 
   const descriptionElementRef = React.useRef(null);
@@ -74,6 +92,8 @@ export default function Cart() {
       }
     }
   }, [open]);
+
+  if (load) return <div>loading...</div>
 
   return (
     <div>
@@ -96,9 +116,7 @@ export default function Cart() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button 
-          // onClick={cartPost}
-          >Make payment</Button>
+          <NavLink to='/Checkout'><Button>Checkout</Button></NavLink>
         </DialogActions>
       </Dialog>
     </div>

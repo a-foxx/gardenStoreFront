@@ -30,7 +30,7 @@ export default function NavigationDrawer() {
   }, [])
 
   const logout = () => {
-    fetch('http://localhost:3000/logout', {
+    fetch('http://localhost:3000/auth/logout', {
       method: 'POST',
       headers: {
           'Content-Length': '0'
@@ -106,7 +106,7 @@ export default function NavigationDrawer() {
         </List>
         <List>
           <ListItemButton sx={{ pl: 4 }}>
-            <NavLink to="/Order-history">
+            <NavLink to="/OrderHistory">
               <ListItemText primary='Order history'/>
             </NavLink>
           </ListItemButton>

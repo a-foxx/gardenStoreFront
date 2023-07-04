@@ -3,24 +3,68 @@ import {useCartContext, useCartDispatch} from '../context/context'
 import { NavLink } from 'react-router-dom'
 
 export default function Products() {
-    const cartItems = useCartContext
-    const cartDispatch = useCartDispatch()
-    const [products, setProducts] = useState([]);
-    
-    
-    // console.log(cartItems())
-    useEffect(() => {
-        fetch('http://localhost:3000/products')
-        .then(response => response.json())
-        .then(response => {
-            setProducts(response)})
-        .catch(error => console.error(error))
-    }, [])
+const cartItems = useCartContext
+const cartDispatch = useCartDispatch()
+const [products, setProducts] = useState([]);
 
-    const addToCart = (el) => {
-// post to carts sessionId?
-        cartDispatch({type: 'add', data: el})
-      }
+
+// console.log(cartItems())
+useEffect(() => {
+    fetch('http://localhost:3000/products')
+    .then(response => response.json())
+    .then(response => {
+        setProducts(response)})
+    .catch(error => console.error(error))
+}, [])
+
+const addToCart = (el) => {
+    const data = {
+        ...el
+    } 
+    const product_id = {product_id: data.product_id}; 
+
+    fetch('http://localhost:3000/checkCarts', { 
+        method: 'POST',
+        body: JSON.stringify(product_id),
+        headers: {
+            'Content-type': 'application/json'
+            },
+        credentials: 'include' 
+    })
+    .then(response => response.json())
+    .then(response => {
+        // if user has product in cart updates qty
+        if (response.message === true) { 
+            fetch('http://localhost:3000/CartQtyIncrease', {
+                method: 'PUT',
+                body: JSON.stringify(product_id),
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                credentials: 'include',
+              })
+              .then(response => response.json())
+              .catch(err => console.log(err))
+        // first post to carts table for that product
+        } 
+        if (response.message === false) {
+            fetch('http://localhost:3000/addtocart', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json",
+                    "Accept": "application/json"
+                },
+                credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(response => {
+                    cartDispatch({type: 'add', data: {...response.data, ...el}})
+                })
+                .catch(error => console.log(error))
+        }
+    })
+    }
 
 // mapping products from db
     const listProducts = products.map((product) => (

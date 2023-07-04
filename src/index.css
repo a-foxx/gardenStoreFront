@@ -122,42 +122,6 @@ a {
   width: 14em;
 }
 
-/* Delivery */
-
-
-/*pop-up window*/
-.windowContainer {
-  height: auto;
-  width: auto;
-  max-height: 85%;
-  max-width: 80%;
-  min-width: 20%;
-  padding: 0.2em;
-  text-align: center;
-  z-index: 9;
-  background-color: azure;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
-  border: 1px solid black;
-  border-radius: 10px;
-  overflow-y: scroll;
-}
-.windowContainer.active {
-  transform: translate(-50%, -50%) scale(1);
-}
-.window-header {
-  font-size: 1.2em;
-  padding: 0 0.5em 0;
-  position: static;
-  display: flex;
-  margin: .25em .5em;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
-}
 .close-button {
   cursor: pointer;
   border: none;
@@ -165,24 +129,6 @@ a {
   background: none;
   font-size: 1.25em;
   font-weight: bold;
-}
-.window-body {
-  font-size: 1.5em;
-  /* width: 60%; */
-  line-height: 1.5em;
-  margin: auto;
-  padding: 0.75em;
-}
-
-#submit {
-  margin: 1.5em;
-  padding: 0.25em;
-  border-radius: 10px;
-}
-.new-account-text {
-  font-size: 1.1em;
-  text-decoration: underline;
-  color: blue;
 }
 #overlay {
   position: fixed;
@@ -199,7 +145,12 @@ a {
   opacity: 1;
 }
 
-
+/* order history */
+.order-history {
+  min-height: 90%;
+  min-width: 80%;
+  font-size: 10em;
+}
 
 /* login */
 
@@ -228,6 +179,13 @@ a {
   margin: 1.5em;
 }
 
+.cart-contents img {
+  height: 8em;
+  width: 6em;
+  border: 1px solid black;
+  border-radius: 12px;
+}
+
 .qty-buttons button{
   font-size: 70%;
   min-height: 1.5em;
@@ -246,16 +204,48 @@ a {
   border-radius: 10px;
 }
 
-.cart-img {
+/* .cart-img {
   height: 5em;
   width: 4em;
   border: 1px solid black;
   border-radius: 12px;
+} */
+
+/* checkout */
+.checkout-container {
+  background-color: rgba(250, 235, 215, 0.7);
+  max-width: 40%;
+  margin: auto;
+  padding: 1em;
+}
+.display-users {
+  font-size: 1.5em;
+  
+  max-width: 80%;
+  margin: auto;
+}
+.address {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  margin: auto;
+  gap: 0.5em;
 }
 
+.address button {
+  min-height: 1em;
+  width: 50%;
+  margin: auto;
+  font-size: 0.75em;
+  font-weight: bold;
+}
 
+.checkout-total {
+  padding: 0.5em;
+  font-size: 1.25em;
+  font-weight: bold;
+}
 
-/* bar drawer */
 
 @media only screen and (max-width: 600px) {
   nav {

@@ -1,41 +1,48 @@
-import { useState } from "react"
+import styled from "@emotion/styled";
+import { useState, useEffect } from "react"
 
-export default function CartItem ({product}) {
-    const [qty, setQty] = useState(product.qty?? 1)
+export default function CartItem ({product, changeCartItem, onDeleteProduct}) { 
+    const [quantity, setQuantity] = useState(product.quantity?? 1);
 
-    // post to cart-contents
-    const cartPost = async (req, res) => {
-        const contentsData = {
-            product_id: product.product_id, 
-            quantity: qty
-            };
-            fetch('http://localhost:3000/addCartContents', {
-            method: 'POST',
-            body: JSON.stringify(contentsData),
-            headers: {
-                "Content-type": "application/json",
-                "Accept": "application/json"
-            },
-            credentials: 'include'
-            })
-            .then(response => response.json())
-            .catch(error => console.log(error))
+    const changeCartCount = (newQuantity) => {
+        setQuantity(newQuantity)
+        changeCartItem(product.cart_id, newQuantity, product.product_id,)
     }
 
-    console.log('product_id:', product.product_id, 'item.qty:', qty);
+    useEffect(() => {
+        setQuantity(product.quantity)
+    }, [product])
+
+    const deleteProduct = () => {
+        const data = {product_id: product.product_id}
+        fetch('http://localhost:3000/deleteCartItem', {
+            method: 'DELETE',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json'
+              },
+              credentials: 'include'
+        })
+        .then(() => {
+            onDeleteProduct(product.product_id)
+        })
+    }
+
+    // const deleteProduct = 
+
     return (
-    <div key={product.product_id}className='cart-contents'>
+    <div key={product.product_id} className='cart-contents'>
         <img className='cart-img' src={product.img_url} alt=''/>
         {product.name}
         <div>£{product.price}</div>
-        <div className='cart-qty'>{qty}</div>
+        <div className='cart-qty'>{quantity}</div>
         <div className='qty-buttons'>
             <button id="qty-up" 
-            onClick={() => setQty(qty + 1)} 
-            // onChange={() => changeParentQty(qty)}
+            onClick={() => changeCartCount(quantity + 1)} 
             >+</button>
-            <button id="qty-down" onClick={() => setQty(qty - 1)}>-</button>
+            <button id="qty-down" onClick={() => changeCartCount(quantity - 1)}>-</button>
         </div>
+            <div onClick={deleteProduct}>&#x2717;</div>
     </div>
     )
 }
