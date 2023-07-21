@@ -2,7 +2,6 @@ import '../../stripe.css';
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-// import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 export default function CheckoutForm({data}) {
@@ -10,13 +9,15 @@ export default function CheckoutForm({data}) {
   const stripe = useStripe();
   const elements = useElements();
   console.log('checkoutform: ', data)
-
+  console.log('productID?: ', data.cart_contents[0].product_id)
+  
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const product_id = {product_id: data.cart_contents[0].product_id};
+    
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -24,7 +25,7 @@ export default function CheckoutForm({data}) {
     }
 
     setIsProcessing(true);
-
+    
     await stripe.confirmPayment({
       elements,
       confirmParams: { 
@@ -35,7 +36,6 @@ export default function CheckoutForm({data}) {
       redirect: 'if_required',
     }
     ).then((result) => {
-      // const data = {total: totalCost, status: 'Unpaid', cart_contents: cart, shipAddress} 
         fetch('http://localhost:3000/createorder', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -44,6 +44,15 @@ export default function CheckoutForm({data}) {
             },
             credentials: 'include'
     })
+        .then(fetch('http://localhost:3000/deleteCart', {
+          method: 'DELETE',
+          body: JSON.stringify(product_id),
+          headers: {
+            'Content-type': 'application/json'
+          },
+          credentials: 'include'
+        }))
+        // .then(response => {if(!response.ok) alert('please manually remove contents of cart prior to making another order.')}))
         .then(response => response.json())
         .then(response => {
           return history('/completion', {state: {data: data}})
@@ -57,22 +66,6 @@ export default function CheckoutForm({data}) {
         }    
       }
     });
-    // console.log('resultsss', result);
-    // const { error } = result;
-    // if (error.type === "card_error" || error.type === "validation_error") {
-    //   setMessage(error.message);
-    // } else {
-    //   setMessage("An unexpected error occured.");
-    // }
-
-    // from video 
-    // if (error) {
-    //   setMessage(error.message)
-    // } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-    //   setMessage('Payment status: ' + paymentIntent.status + ':)')
-    // } else {
-    //   setMessage('Unexpected state')
-    // }
 
     setIsProcessing(false);
   };

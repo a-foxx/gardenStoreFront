@@ -28,8 +28,6 @@ export default function CartItem ({product, changeCartItem, onDeleteProduct}) {
         })
     }
 
-    // const deleteProduct = 
-
     return (
     <div key={product.product_id} className='cart-contents'>
         <img className='cart-img' src={product.img_url} alt=''/>
