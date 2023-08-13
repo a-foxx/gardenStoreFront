@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CheckoutItems from "./CheckoutItems";
 import Header from "../../util/header";
 import NavBar from "../navigation/NavBar";

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {useCartContext, useCartDispatch} from '../context/context'
+import {useCartDispatch} from '../context/context'
 import { NavLink } from 'react-router-dom'
 
 export default function Products() {
-const cartItems = useCartContext
 const cartDispatch = useCartDispatch()
 const [products, setProducts] = useState([]);
 

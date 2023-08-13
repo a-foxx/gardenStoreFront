@@ -61,7 +61,7 @@ export default function Cart() {
   }
 
   const changeCartState = (product_id) => {
-    const newCart = cart.filter((product) => product.product_id != product_id)
+    const newCart = cart.filter((product) => product.product_id !== product_id)
     setCart(newCart)
     console.log(product_id, newCart)
   }
