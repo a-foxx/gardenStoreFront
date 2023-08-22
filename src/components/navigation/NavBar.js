@@ -23,7 +23,7 @@ export default function NavBar() {
         <div className="nav">
         <NavigationDrawer />
         <NavLink to="/Login" element={<Login />} >
-            <img className='nav-img' src='src/components/navigation/images/account.png' alt='' />
+            <img className='nav-img' src='images/account.png' alt='' />
         </NavLink>
         <NavLink to="/Cart" element={<Cart />} >
             <img className='nav-img cart-nav-icon' src='images/cart.png' alt='' />
