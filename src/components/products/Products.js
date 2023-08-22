@@ -9,7 +9,7 @@ const [products, setProducts] = useState([]);
 
 // console.log(cartItems())
 useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL + '/products')
+    fetch(`${process.env.REACT_APP_SERVER_URL}/products`)
     .then(response => response.json())
     .then(response => {
         setProducts(response)})
