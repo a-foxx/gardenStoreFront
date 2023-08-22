@@ -19,7 +19,7 @@ export default function OrderHistory() {
   const history = useNavigate();
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL,'getUserOrder', {credentials: 'include'})
+    fetch(process.env.REACT_APP_SERVER_URL + '/getUserOrder', {credentials: 'include'})
     .then(response => response.json())
     .then(response => {
         setLoad(false);

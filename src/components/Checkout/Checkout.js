@@ -15,7 +15,7 @@ export default function Checkout() {
     
     // check if user is logged in
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL,'checkedLoggedIn', {credentials: 'include'})
+        fetch(process.env.REACT_APP_SERVER_URL + '/checkedLoggedIn', {credentials: 'include'})
         .then(response => response.json())
         .then(response => {
             if (response.message === false) {
@@ -27,7 +27,7 @@ export default function Checkout() {
     
     // get users cart
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL,'getUserCart', {credentials: 'include'})
+        fetch(process.env.REACT_APP_SERVER_URL + '/getUserCart', {credentials: 'include'})
         .then(response => response.json())
         .then(response => {
             console.log('add', response)
@@ -38,7 +38,7 @@ export default function Checkout() {
     
     // gets user info
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL,'getUser', {credentials: 'include'})
+        fetch(process.env.REACT_APP_SERVER_URL + '/getUser', {credentials: 'include'})
         .then(response => response.json())
         .then(response => { 
             setUser(response.data[0])})

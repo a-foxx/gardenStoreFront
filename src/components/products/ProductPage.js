@@ -10,7 +10,7 @@ export default function ProductPage () {
     const [product, setProduct] = useState([]);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL,`getProduct/${productId}`)
+        fetch(process.env.REACT_APP_SERVER_URL + `/getProduct/${productId}`)
         .then(response => response.json())
         .then(response => {setProduct(response)})
         .catch(error => console.error(error))

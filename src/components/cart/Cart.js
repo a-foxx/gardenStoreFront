@@ -21,7 +21,7 @@ export default function Cart() {
 
   // checks if logged in
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL,'/checkedLoggedIn', {credentials: 'include'})
+    fetch(process.env.REACT_APP_SERVER_URL + '/checkedLoggedIn', {credentials: 'include'})
     .then(response => response.json())
     .then(response => {
       if (response.message === false) {
@@ -34,7 +34,7 @@ export default function Cart() {
   // renders cart
   useEffect(() => {
     // if (cart.length) {
-      fetch(process.env.REACT_APP_SERVER_URL,'/getUserCart', {credentials: 'include'})
+      fetch(process.env.REACT_APP_SERVER_URL + '/getUserCart', {credentials: 'include'})
       .then(response => response.json())
       .then(response => {
         setCart(response);
@@ -47,7 +47,7 @@ export default function Cart() {
   // changes quantity of product
   const updateCartItem = async (cart_id, quantity, product_id) => {
     const data = { cart_id, quantity, product_id }
-     await fetch(process.env.REACT_APP_SERVER_URL,'/updateUserCart', {
+     await fetch(process.env.REACT_APP_SERVER_URL + '/updateUserCart', {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {

@@ -36,7 +36,7 @@ export default function CheckoutForm({data}) {
       redirect: 'if_required',
     }
     ).then((result) => {
-        fetch(process.env.REACT_APP_SERVER_URL,'createorder', {
+        fetch(process.env.REACT_APP_SERVER_URL + '/createorder', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -44,7 +44,7 @@ export default function CheckoutForm({data}) {
             },
             credentials: 'include'
     })
-        .then(fetch(process.env.REACT_APP_SERVER_URL,'deleteCart', {
+        .then(fetch(process.env.REACT_APP_SERVER_URL + '/deleteCart', {
           method: 'DELETE',
           body: JSON.stringify(product_id),
           headers: {

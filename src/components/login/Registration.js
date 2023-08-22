@@ -26,7 +26,7 @@ export default function FormDialog() {
     }
     const data = { firstName, lastName, email, password };
     try {
-      const response = await fetch(process.env.REACT_APP_SERVER_URL,'register', {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + '/register', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

@@ -9,7 +9,7 @@ const [products, setProducts] = useState([]);
 
 // console.log(cartItems())
 useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL,'products')
+    fetch(process.env.REACT_APP_SERVER_URL + '/products')
     .then(response => response.json())
     .then(response => {
         setProducts(response)})
@@ -22,7 +22,7 @@ const addToCart = (el) => {
     } 
     const product_id = {product_id: data.product_id}; 
 
-    fetch(process.env.REACT_APP_SERVER_URL,'checkCarts', { 
+    fetch(process.env.REACT_APP_SERVER_URL + '/checkCarts', { 
         method: 'POST',
         body: JSON.stringify(product_id),
         headers: {
@@ -34,7 +34,7 @@ const addToCart = (el) => {
     .then(response => {
         // if user has product in cart updates qty
         if (response.message === true) { 
-            fetch(process.env.REACT_APP_SERVER_URL,'CartQtyIncrease', {
+            fetch(process.env.REACT_APP_SERVER_URL + '/CartQtyIncrease', {
                 method: 'PUT',
                 body: JSON.stringify(product_id),
                 headers: {
@@ -47,7 +47,7 @@ const addToCart = (el) => {
         // first post to carts table for that product
         } 
         if (response.message === false) {
-            fetch(process.env.REACT_APP_SERVER_URL,'addtocart', {
+            fetch(process.env.REACT_APP_SERVER_URL + '/addtocart', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

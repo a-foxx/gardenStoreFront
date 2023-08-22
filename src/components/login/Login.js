@@ -17,7 +17,7 @@ export default function Login() {
   const history = useNavigate();
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL,'checkedLoggedIn', {credentials: 'include'})
+    fetch(process.env.REACT_APP_SERVER_URL + '/checkedLoggedIn', {credentials: 'include'})
     .then(response => response.json())
     .then(response => {
       if (response.message === true) {
@@ -36,7 +36,7 @@ export default function Login() {
     }
     try {
       const data = { email: username, password: password };
-      const response = await fetch(process.env.REACT_APP_SERVER_URL,'auth/login', {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + '/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -69,7 +69,7 @@ export default function Login() {
   };
 
   const googleAuth = async () => {
-    window.open("process.env.REACT_APP_SERVER_URL/auth/google", "_self")
+    window.open(process.env.REACT_APP_SERVER_URL + "/auth/google", "_self")
 
   }
 
