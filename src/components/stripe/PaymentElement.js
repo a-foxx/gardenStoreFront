@@ -12,7 +12,7 @@ function Payment() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/stripe/config").then(async (r) => {
+    fetch(process.env.REACT_APP_SERVER_URL,'stripe/config').then(async (r) => {
       const { publishableKey } = await r.json();
       setStripePromise(loadStripe(publishableKey));
       // setStripePromise(loadStripe('pk_test_51NKSqTLecDVOk4XTtJKH3OpmlvHVgQxAVEDgikKkDJQcxTdwsVyBYHhtN1D4L2slf1VErVzZacrmG7WiwHbahURY00KIpCwMoI'));
@@ -21,7 +21,7 @@ function Payment() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000/stripe/create-payment-intent", {
+    fetch(process.env.REACT_APP_SERVER_URL,'stripe/create-payment-intent', {
       method: "POST",
       body: JSON.stringify({amount: location.state.data.total}),
       headers: {

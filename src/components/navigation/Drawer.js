@@ -23,14 +23,14 @@ export default function NavigationDrawer() {
   const history = useNavigate();
 
   React.useEffect(() => {
-    fetch('http://localhost:3000/products')
+    fetch(process.env.REACT_APP_SERVER_URL,'products')
     .then(response => response.json())
     .then(response => setProductList(response))
     .catch(error => console.error(error))
   }, [])
 
   const logout = () => {
-    fetch('http://localhost:3000/auth/logout', {
+    fetch(process.env.REACT_APP_SERVER_URL,'auth/logout', {
       method: 'POST',
       headers: {
           'Content-Length': '0'

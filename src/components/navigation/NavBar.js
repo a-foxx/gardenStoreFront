@@ -10,7 +10,7 @@ export default function NavBar() {
 
     useEffect(() => {
         try {
-            fetch('http://localhost:3000/getUserCart', {credentials: 'include'})
+            fetch(process.env.REACT_APP_SERVER_URL,'getUserCart', {credentials: 'include'})
             .then(response => {
                 response.json()
             })

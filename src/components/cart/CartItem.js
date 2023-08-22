@@ -15,7 +15,7 @@ export default function CartItem ({product, changeCartItem, onDeleteProduct}) {
 
     const deleteProduct = () => {
         const data = {product_id: product.product_id}
-        fetch('http://localhost:3000/deleteCartItem', {
+        fetch(process.env.REACT_APP_SERVER_URL,'deleteCartItem', {
             method: 'DELETE',
             body: JSON.stringify(data),
             headers: {
