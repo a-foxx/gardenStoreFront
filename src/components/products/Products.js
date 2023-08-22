@@ -69,7 +69,7 @@ const addToCart = (el) => {
     const listProducts = products.map((product) => (
         <div key={product.product_id} className="products">
             <NavLink to={`/Product-Page/${product.product_id}`}>
-            <img className="product-images" src={product.img_url} alt='' />
+            <img className="product-images" src={product.image} alt='' />
             </NavLink>
             <h2>{product.name}</h2>
             <p className="price">£{product.price}</p>

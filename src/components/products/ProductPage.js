@@ -22,7 +22,7 @@ export default function ProductPage () {
             <h2>{element.name}</h2>
             <h3>{element.description}</h3>
             <h3>£{element.price}</h3>
-            <img src={element.img_url} alt=""/>
+            <img src={element.image} alt=""/>
         </div>
         ))
 
