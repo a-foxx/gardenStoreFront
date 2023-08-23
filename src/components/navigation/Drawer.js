@@ -149,7 +149,7 @@ export default function NavigationDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}><img className='nav-img burger' src='images/hamburger-menu-icon-svg-7.png' alt=''/></Button>
+      <Button onClick={toggleDrawer(true)}><img className='nav-img burger' src='/images/hamburger-menu-icon-svg-7.png' alt=''/></Button>
       <Drawer
         anchor={'left'}
         open={state}

@@ -5,7 +5,7 @@ export default function AccountInfo () {
     const [load, setLoad] = useState(true)
     
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL + '/getUsers', {
+        fetch(process.env.REACT_APP_SERVER_URL + '/getUser', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json'
