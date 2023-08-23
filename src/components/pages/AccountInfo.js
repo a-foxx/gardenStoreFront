@@ -13,8 +13,10 @@ export default function AccountInfo () {
             credentials: 'include'
         })
         .then(response => response.json())
-        .then(response => getUser(response))
-        .then(response => setLoad(false))
+        .then(response => () => {
+            getUser(response)
+            setLoad(false)
+        })
     }, [])
 
     if (load) return <div>loading...</div>
