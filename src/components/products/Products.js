@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 export default function Products() {
 const cartDispatch = useCartDispatch()
 const [products, setProducts] = useState([]);
-const [addingToCart, setaddingToCart] = useState(false);
+const [addingToCart, setAddingToCart] = useState(false);
 
 // console.log(cartItems())
 useEffect(() => {
@@ -21,6 +21,8 @@ const addToCart = (el) => {
     if (addingToCart) {
         return; // Prevent multiple clicks while a request is ongoing
       }
+
+    setAddingToCart(true); // Start the cart addition process
 
     const data = {
         ...el
@@ -48,7 +50,7 @@ const addToCart = (el) => {
                 credentials: 'include',
               })
               .then(response => response.json())
-              .then(response => setaddingToCart(false))
+              .then(response => setAddingToCart(false))
               .catch(err => console.log(err))
         // first post to carts table for that product
         } 
@@ -63,7 +65,7 @@ const addToCart = (el) => {
                 credentials: 'include'
                 })
                 .then(response => response.json())
-                .then(response => setaddingToCart(false))
+                .then(response => setAddingToCart(false))
                 .then(response => {
                     cartDispatch({type: 'add', data: {...response.data, ...el}})
                 })
