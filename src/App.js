@@ -8,7 +8,7 @@ import Cart from './components/cart/Cart'
 import Delivery from './components/pages/delivery';
 import Checkout from './components/Checkout/Checkout';
 import OrderHistory from './components/pages/orderHistory';
-import AccountInfo from '/components/pages/AccountInfo';
+import AccountInfo from './components/pages/AccountInfo';
 import Payment from './components/stripe/PaymentElement';
 import Completion from './components/stripe/Completion';
 import { Routes, Route } from 'react-router-dom';
