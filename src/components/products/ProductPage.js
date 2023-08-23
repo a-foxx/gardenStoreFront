@@ -31,7 +31,6 @@ export default function ProductPage () {
         <>
             <Header />
             <NavBar />
-            {/* <h2>{product.price}</h2> */}
             <div className="product-page">
             {mapProducts}   
             </div>
