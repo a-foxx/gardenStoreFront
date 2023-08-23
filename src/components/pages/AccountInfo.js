@@ -15,7 +15,7 @@ export default function AccountInfo () {
         .then(response => response.json())
         .then(response => getUser(response))
         .then(response => setLoad(false))
-    })
+    }, [])
 
     if (load) return <div>loading...</div>
 
