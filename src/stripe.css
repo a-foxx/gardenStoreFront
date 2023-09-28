@@ -83,7 +83,7 @@ select {
 
 .parent {
   display: flex;
-  
+  text-align: center;
 }
 
 #payment-form {

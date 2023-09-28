@@ -72,7 +72,6 @@ export default function CheckoutForm({data}) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      Hello!!!!
       <PaymentElement id="payment-element" />
       <button disabled={isProcessing || !stripe || !elements} id="submit">
         <span id="button-text">
