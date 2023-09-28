@@ -110,7 +110,7 @@ export default function Login() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <NavLink to="/Register"><Button>Register account</Button></NavLink>
+          <NavLink to="/Register"><Button>Register</Button></NavLink>
           <Button onClick={googleAuth}>Google</Button>
           <Button onClick={submitLogin}>Login</Button>
         </DialogActions>
