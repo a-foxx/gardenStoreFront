@@ -42,7 +42,7 @@ header img {
   align-items: center;
   font-size: 1.25em;
   margin: 1em 0;
-  padding: 0.2em 10em;
+  padding: 0.2em 8em;
   flex-wrap: wrap;
   top: 0;
   position: sticky;
@@ -254,8 +254,10 @@ a {
     display: none;
   }
   nav {
+    width: 100%;
+    flex-direction: column;
     padding: 0.5em 0.5em;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.5em;
   }
   body {
     background-color: aliceblue;
