@@ -5,4 +5,3 @@ https://garden-store-frontend.vercel.app/Home
 
 to see the API docs visit /api-docs
 
-
